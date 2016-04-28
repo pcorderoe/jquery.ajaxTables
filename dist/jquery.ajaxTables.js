@@ -34,7 +34,6 @@ if (typeof jQuery === 'undefined') { throw new Error('ajaxTables requiere jQuery
 	AjaxTables.prototype.init = function(obj,options) {
 		options = $.extend({},this.default,options);
 		options.obj = obj;
-
 		var _this = this;
 		this.buildTable(options,function(columns){
 			var conf = {
@@ -280,7 +279,7 @@ if (typeof jQuery === 'undefined') { throw new Error('ajaxTables requiere jQuery
         	},700);
         });
         /*********** MANEJA FECHA SIMPLE *************************/
-		var sel = $('[data-toggle="dateTablesSimple"]');
+		var sel = $('[data-toggle="dateTablesSimple"]',$(options.obj));
 		sel.find('.delFilter').die('click').live('click',function(e){
 			$('.datepicker-dropdown').remove();
 			$(this).parent().parent().find('input').attr('value','');
@@ -306,13 +305,13 @@ if (typeof jQuery === 'undefined') { throw new Error('ajaxTables requiere jQuery
         	},700);
 		});
 		/*************** MANEJA RANGO FECHAS ***************************/
-		var sel = $('[data-toggle="dateTables"]');
+		var sel = $('[data-toggle="dateTables"]',$(options.obj));
 		sel.find('.delFilter').die('click').live('click',function(e){
 			$('.datepicker-dropdown').remove();
 			$(this).parent().parent().find('input').attr('value','');
 			$(this).parent().parent().find('input').trigger('changeDate');
 		});
-		sel.on('changeDate',function(){
+		sel.die('changeDate').live('changeDate',function(){
 			var dis = $(this);
 			if(dis.find('input').attr('value')==''){
 				dis.datepicker('update');
